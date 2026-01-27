@@ -14,24 +14,20 @@ body {
   overflow-x: hidden;
 }
 
-/* Overlay */
+/* ===== OVERLAY ===== */
 .overlay {
   position: fixed;
   inset: 0;
-
-  background-color: #7a0000; /* nền đỏ Tết */
+  background-color: #7a0000;
   background-image: url("https://raw.githubusercontent.com/hanam22/CatchFish-YEP/main/assets/images/halem1.png");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain; /* QUAN TRỌNG: không zoom */
-
+  background-size: contain;
   display: flex;
   align-items: center;
   justify-content: center;
-
   z-index: 9999;
 }
-
 
 .open-btn {
   padding: 22px 32px;
@@ -43,7 +39,30 @@ body {
   cursor: pointer;
 }
 
-/* Card */
+/* ===== LOGO SPLASH ===== */
+#logoSplash {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  display: none;
+}
+
+#logoSplash img {
+  width: 220px;
+  animation: logoZoomOut 2s ease forwards;
+}
+
+@keyframes logoZoomOut {
+  0% { transform: scale(1); opacity: 1; }
+  70% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(0.2); opacity: 0; }
+}
+
+/* ===== CARD ===== */
 .card {
   max-width: 420px;
   margin: 40px auto;
@@ -63,7 +82,6 @@ body {
 
 h1 {
   color: #ffd700;
-  margin-bottom: 10px;
 }
 
 .highlight {
@@ -87,14 +105,9 @@ button {
 }
 
 .yes { background: #06d6a0; }
-.no  { background: #ef476f; color: white; }
+.no { background: #ef476f; color: white; }
 
-canvas {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-}
-
+/* ===== FALLING ITEMS ===== */
 .fall {
   position: fixed;
   top: -50px;
@@ -110,6 +123,7 @@ canvas {
   }
 }
 
+/* ===== MUSIC BUTTON ===== */
 #musicBtn {
   position: fixed;
   bottom: 20px;
@@ -121,7 +135,6 @@ canvas {
   font-size: 22px;
   cursor: pointer;
   background: #ffd700;
-  box-shadow: 0 0 15px rgba(0,0,0,0.4);
   display: none;
 }
 </style>
@@ -129,21 +142,27 @@ canvas {
 
 <body>
 
+<!-- AUDIO -->
 <audio id="music" preload="auto" loop>
   <source src="music/tet-dong-day.mp3" type="audio/mpeg">
 </audio>
 
+<!-- LOGO SPLASH -->
+<div id="logoSplash">
+  <img src="https://raw.githubusercontent.com/hanam22/CatchFish-YEP/main/assets/images/Yep-logo%201.png">
+</div>
+
+<!-- OVERLAY -->
 <div class="overlay" id="overlay">
   <div style="text-align:center">
-    <p style="color:#ffcccc; font-size:14px; opacity:0.9; margin-bottom:20px;">
-      (Bấm mở thiệp đi)
+    <p style="color:#ffcccc; font-size:14px; margin-bottom:20px">
+      (Bấm mở thiệp đi111)
     </p>
     <button class="open-btn" onclick="openInvite()">🧧 Chạm vào đây nèee~~~</button>
   </div>
 </div>
 
-<canvas id="fireworks"></canvas>
-
+<!-- CARD -->
 <div class="card" id="card">
   <img src="https://raw.githubusercontent.com/hanam22/CatchFish-YEP/main/assets/images/Logo-Batca.png" class="logo">
   <h1>🧧 GIẤY TRIỆU TẬP 🧧</h1>
@@ -172,23 +191,34 @@ const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdxbXJFkTb7nuTUuGFKvK
 const ENTRY_NAME = "entry.1538529867";
 const ENTRY_JOIN = "entry.355441364";
 
+/* ===== OPEN INVITE ===== */
 function openInvite() {
-  const music = document.getElementById("music");
-  music.volume = 0;
-  music.play();
-  let v = 0;
-  const fade = setInterval(() => {
-    v += 0.05;
-    music.volume = Math.min(v, 1);
-    if (v >= 1) clearInterval(fade);
-  }, 200);
   document.getElementById("overlay").style.display = "none";
-  document.getElementById("card").style.display = "block";
-  document.getElementById("musicBtn").style.display = "block";
 
-  startFoodRain();
+  const splash = document.getElementById("logoSplash");
+  splash.style.display = "flex";
+
+  setTimeout(() => {
+    splash.style.display = "none";
+
+    const music = document.getElementById("music");
+    music.volume = 0;
+    music.play();
+
+    let v = 0;
+    const fade = setInterval(() => {
+      v += 0.05;
+      music.volume = Math.min(v, 1);
+      if (v >= 1) clearInterval(fade);
+    }, 200);
+
+    document.getElementById("card").style.display = "block";
+    document.getElementById("musicBtn").style.display = "block";
+    startFoodRain();
+  }, 2000);
 }
 
+/* ===== MUSIC ===== */
 function toggleMusic() {
   const music = document.getElementById("music");
   const btn = document.getElementById("musicBtn");
@@ -199,7 +229,7 @@ function toggleMusic() {
   }
 }
 
-/* ====== RESPONSE ====== */
+/* ===== RESPONSE ===== */
 function respond(ans) {
   let name = "";
 
@@ -219,20 +249,19 @@ function respond(ans) {
 
   fetch(FORM_URL, { method: "POST", mode: "no-cors", body: data });
 }
-/* ====== 🍺 + 🍗 + 🧧 RƠI CHUNG ====== */
-function startFoodRain() {
-  const items = ["🍺", "🍗", "🧧"];
 
+/* ===== FALLING ITEMS ===== */
+function startFoodRain() {
+  const items = ["🍺","🍗","🧧"];
   setInterval(() => {
     const el = document.createElement("div");
     el.className = "fall";
-    el.innerText = items[Math.floor(Math.random() * items.length)];
-    el.style.left = Math.random() * 100 + "vw";
-    el.style.animationDuration = (5 + Math.random() * 5) + "s";
+    el.innerText = items[Math.floor(Math.random()*items.length)];
+    el.style.left = Math.random()*100 + "vw";
+    el.style.animationDuration = (5 + Math.random()*5) + "s";
     document.body.appendChild(el);
-
-    setTimeout(() => el.remove(), 10000);
-  }, 600);
+    setTimeout(()=>el.remove(),10000);
+  },600);
 }
 </script>
 
