@@ -104,7 +104,13 @@ button {
 }
 
 .yes { background: #06d6a0; }
-.no { background: #ef476f; color: white; }
+.no {
+  background: rgba(200, 200, 200, 0.35); /* xám nhạt */
+  border: 2px solid #b0b0b0;            /* viền xám */
+  color: #ffffff;                       /* chữ trắng */
+  backdrop-filter: blur(4px);
+}
+
 
 /* ===== FALLING ITEMS ===== */
 .fall {
@@ -200,7 +206,7 @@ button {
 
 <div class="overlay" id="overlay">
   <div style="text-align:center">
-    <p style="color:#dc17ff; font-size:24px; margin-bottom:20px">
+    <p style="color:#141313; font-size:24px; margin-bottom:20px">
       (Bấm mở thiệp đi)
     </p>
     <button class="open-btn" onclick="openInvite()">🧧 Chạm vào đây nèee~~~</button>
