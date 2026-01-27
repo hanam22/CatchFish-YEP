@@ -174,4 +174,25 @@ function playMusic() {
     }, 200);
 }
 </script>
-
+<audio id="music" loop>
+    <source src="https://assets.mixkit.co/music/preview/mixkit-chinese-new-year-1174.mp3">
+</audio>
+<script>
+document.addEventListener("click", function () {
+    const music = document.getElementById("music");
+    music.play();
+}, { once: true });
+</script>
+<script>
+document.addEventListener("click", function () {
+    const music = document.getElementById("music");
+    music.volume = 0;
+    music.play();
+    let v = 0;
+    const fade = setInterval(() => {
+        v += 0.05;
+        music.volume = Math.min(v, 1);
+        if (v >= 1) clearInterval(fade);
+    }, 200);
+}, { once: true });
+</script>
