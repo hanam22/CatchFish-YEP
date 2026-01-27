@@ -46,8 +46,6 @@ body {
   text-align: center;
   box-shadow: 0 20px 40px rgba(0,0,0,0.6);
   display: none;
-  position: relative;
-  z-index: 10;
 }
 
 .logo {
@@ -57,6 +55,7 @@ body {
 
 h1 {
   color: #ffd700;
+  margin-bottom: 10px;
 }
 
 .highlight {
@@ -82,29 +81,25 @@ button {
 .yes { background: #06d6a0; }
 .no  { background: #ef476f; color: white; }
 
-/* ===== FALLING ITEMS ===== */
-.fall {
-  position: fixed;
-  top: -60px;
-  font-size: 32px;
-  animation: fall linear infinite;
-  z-index: 1;
-  pointer-events: none;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(120vh) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-/* Fireworks canvas */
 canvas {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+}
+
+.fall {
+  position: fixed;
+  top: -50px;
+  font-size: 30px;
+  animation: fall linear infinite;
+  z-index: 1;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
 }
 
 #musicBtn {
@@ -118,6 +113,7 @@ canvas {
   font-size: 22px;
   cursor: pointer;
   background: #ffd700;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
   display: none;
 }
 </style>
@@ -130,7 +126,12 @@ canvas {
 </audio>
 
 <div class="overlay" id="overlay">
-  <button class="open-btn" onclick="openInvite()">🧧 Mở thiệp nèee</button>
+  <div style="text-align:center">
+    <p style="font-size:14px; opacity:0.85; margin-bottom:20px;">
+      (Bấm mở thiệp đi11111)
+    </p>
+    <button class="open-btn" onclick="openInvite()">🧧 Chạm vào đây nèee~~~</button>
+  </div>
 </div>
 
 <canvas id="fireworks"></canvas>
@@ -139,9 +140,14 @@ canvas {
   <img src="https://raw.githubusercontent.com/hanam22/CatchFish-YEP/main/assets/images/Yep-logo%201.png" class="logo">
   <h1>🧧 GIẤY TRIỆU TẬP 🧧</h1>
 
-  <p class="highlight">Team Bắt Cá</p>
-  <p>🕒 13h – 01/02/2026</p>
-  <p>📍 Kingdom101, Q10</p>
+  <p>Trân trọng quỳ lạy kính mời</p>
+  <p class="highlight">Toàn thể anh/chị/em/chó/mèo Team bắt cá</p>
+
+  <p>🕒 <b>13h – 01/02/2026</b></p>
+  <p>📍 Kingdom101, Quận 10</p>
+
+  <p>👗 Dresscode: Mặc qq cũng được</p>
+  <p>Riêng ông Batra mặc gì kín đáo không làm mọi người mắc ói</p>
 
   <div class="buttons">
     <button class="yes" onclick="respond('Tham gia')">🎉 Tham gia</button>
@@ -159,65 +165,67 @@ const ENTRY_NAME = "entry.1538529867";
 const ENTRY_JOIN = "entry.355441364";
 
 function openInvite() {
+  const music = document.getElementById("music");
+  music.volume = 0;
   music.play();
+  let v = 0;
+  const fade = setInterval(() => {
+    v += 0.05;
+    music.volume = Math.min(v, 1);
+    if (v >= 1) clearInterval(fade);
+  }, 200);
   document.getElementById("overlay").style.display = "none";
   document.getElementById("card").style.display = "block";
   document.getElementById("musicBtn").style.display = "block";
 
-  startFalling();
-  startFireworks();
+  startFoodRain();
 }
 
 function toggleMusic() {
-  music.paused ? music.play() : music.pause();
+  const music = document.getElementById("music");
+  const btn = document.getElementById("musicBtn");
+  if (music.paused) {
+    music.play(); btn.textContent = "🔊";
+  } else {
+    music.pause(); btn.textContent = "🔇";
+  }
 }
 
-/* ===== FORM ===== */
+/* ====== RESPONSE ====== */
 function respond(ans) {
   let name = "";
+
   if (ans === "Tham gia") {
-    name = prompt("Nhập tên bạn 🧧");
-    if (!name) return;
+    name = prompt("Nhập tên của bạn nha 🧧");
+    if (!name) return alert("Chưa nhập tên kìa 😤");
+    document.getElementById("result").innerText =
+      "🎊 Đã ghi nhận: " + name + " – " + ans;
+  } else {
+    document.getElementById("result").innerText =
+      "🥲 Đã ghi nhận: Không tham gia";
   }
-  document.getElementById("result").innerText = "Đã ghi nhận: " + (name || "Không tham gia");
+
   const data = new FormData();
   data.append(ENTRY_NAME, name || "Không tham gia");
   data.append(ENTRY_JOIN, ans);
+
   fetch(FORM_URL, { method: "POST", mode: "no-cors", body: data });
 }
 
-/* ===== FALLING 🍺 🍗 🧧 ===== */
-function startFalling() {
-  const items = ["🍺", "🍗", "🧧"];
+/* ====== 🍺 + 🍗 RƠI ====== */
+function startFoodRain() {
+  const items = ["🍺", "🍗"];
+
   setInterval(() => {
     const el = document.createElement("div");
     el.className = "fall";
     el.innerText = items[Math.floor(Math.random() * items.length)];
     el.style.left = Math.random() * 100 + "vw";
-    el.style.animationDuration = (5 + Math.random() * 4) + "s";
+    el.style.animationDuration = (6 + Math.random() * 4) + "s";
     document.body.appendChild(el);
+
     setTimeout(() => el.remove(), 10000);
-  }, 600);
-}
-
-/* ===== FIREWORKS 🎆 ===== */
-function startFireworks() {
-  const canvas = document.getElementById("fireworks");
-  const ctx = canvas.getContext("2d");
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-
-  setInterval(() => {
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height / 2;
-    for (let i = 0; i < 40; i++) {
-      ctx.beginPath();
-      ctx.arc(x, y, 2, 0, Math.PI * 2);
-      ctx.fillStyle = ["#ffd700", "#ff4d4d", "#fff"][Math.floor(Math.random()*3)];
-      ctx.fill();
-    }
-    setTimeout(() => ctx.clearRect(0,0,canvas.width,canvas.height), 300);
-  }, 800);
+  }, 700);
 }
 </script>
 
