@@ -102,7 +102,23 @@ button {
   cursor: pointer;
 }
 
-.yes { background: #06d6a0; }
+.yes {
+  background: linear-gradient(145deg, #ffd54f, #ffb300); /* vàng đẹp, có chiều sâu */
+  color: #ffffff;                                       /* chữ trắng rõ */
+  border: 2px solid #2ecc71;                             /* viền xanh lá */
+  font-weight: 700;
+  box-shadow:
+    0 6px 14px rgba(255, 193, 7, 0.45),
+    inset 0 0 8px rgba(255,255,255,0.25);
+}
+
+.yes:hover {
+  transform: scale(1.06);
+  box-shadow:
+    0 8px 18px rgba(255, 193, 7, 0.6),
+    inset 0 0 10px rgba(255,255,255,0.35);
+}
+
 .no {
   background: rgba(200, 200, 200, 0.35); /* xám nhạt */
   border: 2px solid #b0b0b0;            /* viền xám */
@@ -208,7 +224,7 @@ button {
 <div class="overlay" id="overlay">
   <div style="text-align:center">
     <p style="color:#c305ed; font-size:24px; margin-bottom:20px">
-      (Bấm mở thiệp đi111)
+      (Bấm mở thiệp đi)
     </p>
     <button class="open-btn" onclick="openInvite()">🧧 Chạm vào đây nèee~~~</button>
   </div>
