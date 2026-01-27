@@ -19,17 +19,11 @@ body {
   position: fixed;
   inset: 0;
 
-  /* ẢNH NỀN OVERLAY */
-  background-image:
-    linear-gradient(
-      rgba(0, 0, 0, 0.45),
-      rgba(0, 0, 0, 0.45)
-    ),
-    url("https://raw.githubusercontent.com/hanam22/CatchFish-YEP/main/assets/images/Logo-Batca.png");
-
-  background-size: cover;
-  background-position: center;
+  background-color: #7a0000; /* nền đỏ Tết */
+  background-image: url("https://raw.githubusercontent.com/hanam22/CatchFish-YEP/main/assets/images/trunguaahquang.png");
   background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* QUAN TRỌNG: không zoom */
 
   display: flex;
   align-items: center;
@@ -142,7 +136,7 @@ canvas {
 <div class="overlay" id="overlay">
   <div style="text-align:center">
     <p style="font-size:14px; opacity:0.85; margin-bottom:20px;">
-      (Bấm mở thiệp đi1123123)
+      (Bấm mở thiệp đi)
     </p>
     <button class="open-btn" onclick="openInvite()">🧧 Chạm vào đây nèee~~~</button>
   </div>
