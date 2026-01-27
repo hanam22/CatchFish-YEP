@@ -1,4 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Year End Party Invitation</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #1a1a2e, #000);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Overlay mở thiệp */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, #000, #1a1a2e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.open-btn {
+    padding: 20px 30px;
+    font-size: 20px;
+    border-radius: 15px;
+    border: none;
+    background: #ffd166;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Card */
+.card {
+    max-width: 420px;
+    margin: 40px auto;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+}
+
+.logo {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    color: #ffd166;
+}
+
+.highlight {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.yes { background: #06d6a0; }
+.no { background: #ef476f; color: white; }
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+</style>
+</head>
+
 <body>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay">
+    <button class="open-btn" onclick="openInvite()">
+        🎉 Chạm để mở thiệp 🎶
+    </button>
+</div>
 
 <!-- FIREWORKS -->
 <canvas id="fireworks"></canvas>
@@ -28,6 +125,22 @@
 </div>
 
 <script>
+/* OPEN INVITE + MUSIC */
+function openInvite() {
+    const music = document.getElementById("music");
+    music.volume = 0;
+    music.play();
+
+    let v = 0;
+    const fade = setInterval(() => {
+        v += 0.05;
+        music.volume = Math.min(v, 1);
+        if (v >= 1) clearInterval(fade);
+    }, 200);
+
+    document.getElementById("overlay").style.display = "none";
+}
+
 /* YES / NO */
 function respond(answer) {
     document.getElementById("result").innerText =
@@ -72,20 +185,6 @@ function animate() {
 
 setInterval(createFirework, 800);
 animate();
-
-/* AUTO PLAY NHẠC KHI CLICK LINK */
-document.addEventListener("click", function () {
-    const music = document.getElementById("music");
-    music.volume = 0;
-    music.play();
-
-    let v = 0;
-    const fade = setInterval(() => {
-        v += 0.05;
-        music.volume = Math.min(v, 1);
-        if (v >= 1) clearInterval(fade);
-    }, 200);
-}, { once: true });
 </script>
 
 </body>
