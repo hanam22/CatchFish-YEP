@@ -128,7 +128,7 @@ canvas {
 <div class="overlay" id="overlay">
   <div style="text-align:center">
     <p style="font-size:14px; opacity:0.85; margin-bottom:20px;">
-      (Bấm mở thiệp đi11111)
+      (Bấm mở thiệp đi33333)
     </p>
     <button class="open-btn" onclick="openInvite()">🧧 Chạm vào đây nèee~~~</button>
   </div>
@@ -213,19 +213,21 @@ function respond(ans) {
 }
 
 /* ====== 🍺 + 🍗 RƠI ====== */
+<script>
+/* ====== 🍺 + 🍗 + 🧧 RƠI CHUNG ====== */
 function startFoodRain() {
-  const items = ["🍺", "🍗"];
+  const items = ["🍺", "🍗", "🧧"];
 
   setInterval(() => {
     const el = document.createElement("div");
     el.className = "fall";
     el.innerText = items[Math.floor(Math.random() * items.length)];
     el.style.left = Math.random() * 100 + "vw";
-    el.style.animationDuration = (6 + Math.random() * 4) + "s";
+    el.style.animationDuration = (5 + Math.random() * 5) + "s";
     document.body.appendChild(el);
 
     setTimeout(() => el.remove(), 10000);
-  }, 700);
+  }, 600);
 }
 </script>
 
