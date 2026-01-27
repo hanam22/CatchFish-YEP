@@ -159,6 +159,18 @@ animate();
 
 </body>
 </html>
-<audio id="music" autoplay loop>
+<audio id="music" loop>
     <source src="https://assets.mixkit.co/music/preview/mixkit-rebel-rock-1315.mp3">
 </audio>
+<button onclick="playMusic()"
+style="margin-top:15px;padding:10px 16px;border-radius:10px;border:none;
+background:#ffd166;font-weight:bold;">
+🎵 Bật nhạc
+</button>
+
+<script>
+function playMusic() {
+    document.getElementById("music").play();
+}
+</script>
+
