@@ -166,11 +166,17 @@ animate();
 style="margin-top:15px;padding:10px 16px;border-radius:10px;border:none;
 background:#ffd166;font-weight:bold;">
 🎵 Bật nhạc
-</button>
-
 <script>
 function playMusic() {
-    document.getElementById("music").play();
+    const music = document.getElementById("music");
+    music.volume = 0;
+    music.play();
+    let v = 0;
+    const fade = setInterval(() => {
+        v += 0.05;
+        music.volume = Math.min(v, 1);
+        if (v >= 1) clearInterval(fade);
+    }, 200);
 }
 </script>
 
