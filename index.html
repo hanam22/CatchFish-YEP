@@ -3,199 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Giấy triệu tập tiệc Tất Niên</title>
+<title>Thiệp Mời Tất Niên</title>
 
 <style>
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: radial-gradient(circle at top, #b30000, #5a0000);
-    color: #fff8dc;
+    background: linear-gradient(#fff3d6, #ffe0b2);
+    text-align: center;
     overflow-x: hidden;
 }
 
-/* Overlay */
-.overlay {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle, #8b0000, #2b0000);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+.container {
+    padding: 20px;
 }
 
-.open-btn {
-    padding: 22px 32px;
-    font-size: 20px;
-    border-radius: 18px;
-    border: none;
-    background: linear-gradient(135deg, #ffd700, #ffb703);
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* Card */
 .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 25px;
     max-width: 420px;
-    margin: 40px auto;
-    background: rgba(255,215,0,0.15);
-    backdrop-filter: blur(10px);
-    border-radius: 22px;
-    padding: 28px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-    display: none;
+    margin: auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
-.logo {
-    width: 90px;
+h1 {
+    color: #d32f2f;
+}
+
+img {
+    width: 120px;
     margin-bottom: 10px;
 }
 
-h1 { color: #ffd700; }
-.highlight { color: #ffdf6c; font-weight: bold; }
-
-.buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
 }
 
 button {
-    flex: 1;
-    padding: 12px;
-    border-radius: 12px;
+    background: #d32f2f;
+    color: white;
     border: none;
-    font-size: 16px;
     cursor: pointer;
 }
 
-.yes { background: #06d6a0; }
-.no  { background: #ef476f; color: white; }
+button:hover {
+    background: #b71c1c;
+}
 
-/* Music button */
-#musicBtn {
+.firework {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 54px;
-    height: 54px;
+    width: 8px;
+    height: 8px;
+    background: red;
     border-radius: 50%;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    background: #ffd700;
-    display: none;
+    animation: explode 1.2s infinite;
 }
 
-/* Popup form */
-.form-popup {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 99999;
-}
-
-.form-box {
-    background: #fff8dc;
-    color: #000;
-    padding: 20px;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 360px;
-}
-
-.form-box input {
-    width: 100%;
-    padding: 10px;
-    margin: 12px 0;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-.form-box button {
-    width: 100%;
-    background: #06d6a0;
+@keyframes explode {
+    0% {transform: scale(1); opacity:1;}
+    100% {transform: scale(4); opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- AUDIO -->
+<!-- 🎵 NHẠC NỀN -->
 <audio id="music" loop>
-  <source src="music/tet-dong-day.mp3" type="audio/mpeg">
+    <source src="tet-dong-day.mp3" type="audio/mpeg">
 </audio>
 
-<!-- OPEN -->
-<div class="overlay" id="overlay">
-    <button class="open-btn" onclick="openInvite()">🧧 Chạm vào đây nèee</button>
-</div>
+<div class="container">
+    <div class="card">
+        <img src="https://i.imgur.com/0Z8FQxF.png" alt="Lì xì">
+        <h1>🎉 Thiệp Mời Tất Niên 🎉</h1>
+        <p>Trân trọng kính mời bạn tham dự tiệc Year End Party 🧧</p>
 
-<div class="card" id="card">
-    <img src="https://raw.githubusercontent.com/hanam22/CatchFish-YEP/main/assets/images/Yep-logo%201.png" class="logo">
-    <h1>🧧 GIẤY TRIỆU TẬP 🧧</h1>
-    <p class="highlight">Team bắt cá</p>
+        <input id="name" placeholder="Họ và tên">
 
-    <p>🕒 13h – 01/02/2026</p>
-    <p>📍 Kingdom101, Quận 10</p>
+        <select id="status">
+            <option value="">Bạn có tham gia không?</option>
+            <option value="Tham gia">✅ Tham gia</option>
+            <option value="Không tham gia">❌ Không tham gia</option>
+        </select>
 
-    <div class="buttons">
-        <button class="yes" onclick="openForm()">🎉 Tham gia</button>
-        <button class="no" onclick="respond('Không tham gia')">🥲 Không tham gia</button>
-    </div>
-
-    <p id="result"></p>
-</div>
-
-<button id="musicBtn" onclick="toggleMusic()">🔊</button>
-
-<!-- FORM POPUP -->
-<div class="form-popup" id="formPopup">
-    <div class="form-box">
-        <h3>✍️ Nhập tên của bạn</h3>
-        <input type="text" id="username" placeholder="Tên của bạn">
-        <button onclick="submitForm()">Gửi xác nhận</button>
+        <button onclick="submitForm()">GỬI XÁC NHẬN</button>
+        <p id="msg"></p>
     </div>
 </div>
 
 <script>
-const FORM_URL = "hhttps://forms.gle/uwKqx29smLmV4tYm8";
-const NAME_FIELD = "entry.123456789";   // ID câu hỏi tên
-const STATUS_FIELD = "entry.987654321"; // ID trạng thái
-
-function openInvite() {
+// 🎵 phát nhạc sau click (bắt buộc do trình duyệt)
+document.body.addEventListener("click", () => {
     document.getElementById("music").play();
-    document.getElementById("overlay").style.display = "none";
-    document.getElementById("card").style.display = "block";
-    document.getElementById("musicBtn").style.display = "block";
+}, { once: true });
+
+// 🎆 pháo hoa
+for (let i = 0; i < 20; i++) {
+    let f = document.createElement("div");
+    f.className = "firework";
+    f.style.left = Math.random() * 100 + "vw";
+    f.style.top = Math.random() * 100 + "vh";
+    document.body.appendChild(f);
 }
 
-function toggleMusic() {
-    const m = document.getElementById("music");
-    m.paused ? m.play() : m.pause();
-}
-
-function openForm() {
-    document.getElementById("formPopup").style.display = "flex";
-}
-
+// 📋 GỬI GOOGLE FORM
 function submitForm() {
-    const name = document.getElementById("username").value;
-    if (!name) return alert("Nhập tên cái coi 😆");
+    const name = document.getElementById("name").value;
+    const status = document.getElementById("status").value;
+
+    if (!name || !status) {
+        alert("Vui lòng nhập đầy đủ thông tin");
+        return;
+    }
+
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdxbXJFkTb7nuTUuGFKvKubZcHfkCIIT9fhytRbSo-nmudWrg/formResponse";
 
     const data = new FormData();
-    data.append(NAME_FIELD, name);
-    data.append(STATUS_FIELD, "Tham gia");
+    data.append("entry.111111111", name);      // 🔴 THAY entry HỌ TÊN
+    data.append("entry.222222222", status);    // 🔴 THAY entry THAM GIA
 
-    fetch(FORM_URL, { method: "POST", mode: "no-cors", body: data });
-
-    document.getElementById("formPopup").style.display = "none";
-    document.getElementById("result").innerText = "🎊 Đã ghi nhận: " + name;
+    fetch(formURL, {
+        method: "POST",
+        mode: "no-cors",
+        body: data
+    }).then(() => {
+        document.getElementById("msg").innerText = "🎊 Gửi thành công! Hẹn gặp bạn 🎊";
+    });
 }
 </script>
 
