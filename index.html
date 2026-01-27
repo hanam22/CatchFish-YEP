@@ -33,20 +33,15 @@ body {
   padding: 18px 36px;
   font-size: 20px;
   border-radius: 18px;
-
-  background: rgba(255, 255, 255, 0.08); /* nền trong suốt */
-  border: 2px solid #b30000;             /* viền đỏ */
-  color: #8b0000;                        /* chữ đỏ đậm */
-
+  background: rgba(255,255,255,0.08);
+  border: 2px solid #b30000;
+  color: #8b0000;
   font-weight: 700;
   cursor: pointer;
-
   backdrop-filter: blur(6px);
   box-shadow:
-    0 0 12px rgba(179, 0, 0, 0.5),
-    inset 0 0 10px rgba(255, 0, 0, 0.15);
-
-  transition: all 0.25s ease;
+    0 0 12px rgba(179,0,0,0.5),
+    inset 0 0 10px rgba(255,0,0,0.15);
 }
 
 /* ===== LOGO SPLASH ===== */
@@ -54,11 +49,10 @@ body {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.65);
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   z-index: 10000;
-  display: none;
 }
 
 #logoSplash img {
@@ -85,14 +79,8 @@ body {
   display: none;
 }
 
-.logo {
-  width: 90px;
-  margin-bottom: 10px;
-}
-
-h1 {
-  color: #ffd700;
-}
+.logo { width: 90px; margin-bottom: 10px; }
+h1 { color: #ffd700; }
 
 .highlight {
   color: #ffdf6c;
@@ -127,10 +115,7 @@ button {
 }
 
 @keyframes fall {
-  to {
-    transform: translateY(110vh) rotate(360deg);
-    opacity: 0;
-  }
+  to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 
 /* ===== MUSIC BUTTON ===== */
@@ -147,32 +132,68 @@ button {
   background: #ffd700;
   display: none;
 }
+
+/* ===== MENU OVERLAY (ADD) ===== */
+#menuOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+}
+
+.menu-box {
+  width: 90%;
+  max-width: 420px;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid #b30000;
+  border-radius: 20px;
+  padding: 24px;
+  color: #fff8dc;
+  text-align: center;
+}
+
+.menu-box h2 { color: #ffd700; margin-bottom: 16px; }
+
+.menu-list {
+  text-align: left;
+  line-height: 1.8;
+}
+
+.menu-close {
+  margin-top: 20px;
+  padding: 10px 24px;
+  border-radius: 14px;
+  border: 2px solid #ffd700;
+  background: transparent;
+  color: #ffd700;
+  cursor: pointer;
+}
 </style>
 </head>
 
 <body>
 
-<!-- AUDIO -->
 <audio id="music" preload="auto" loop>
   <source src="music/tet-dong-day.mp3" type="audio/mpeg">
 </audio>
 
-<!-- LOGO SPLASH -->
 <div id="logoSplash">
   <img src="https://raw.githubusercontent.com/hanam22/CatchFish-YEP/main/assets/images/Go123.jpg">
 </div>
 
-<!-- OVERLAY -->
 <div class="overlay" id="overlay">
   <div style="text-align:center">
     <p style="color:#ff1517; font-size:14px; margin-bottom:20px">
-      (Bấm mở thiệp đi)
+      (Bấm mở thiệp đi1111122)
     </p>
     <button class="open-btn" onclick="openInvite()">🧧 Chạm vào đây nèee~~~</button>
   </div>
 </div>
 
-<!-- CARD -->
 <div class="card" id="card">
   <img src="https://raw.githubusercontent.com/hanam22/CatchFish-YEP/main/assets/images/Logo-Batca.png" class="logo">
   <h1>🧧 GIẤY TRIỆU TẬP 🧧</h1>
@@ -191,27 +212,42 @@ button {
     <button class="no" onclick="respond('Không tham gia')">🥲 Không tham gia</button>
   </div>
 
+  <!-- MENU BUTTON (ADD) -->
+  <button class="open-btn" style="margin-top:16px" onclick="openMenu()">📜 Menu</button>
+
   <p id="result"></p>
 </div>
 
 <button id="musicBtn" onclick="toggleMusic()">🔊</button>
+
+<!-- MENU OVERLAY (ADD) -->
+<div id="menuOverlay">
+  <div class="menu-box">
+    <h2>🍽 MENU TẤT NIÊN 🍽</h2>
+    <div class="menu-list">
+      🍗 Gà luộc / gà chiên  
+      <br>🐖 Heo quay  
+      <br>🥩 Sườn nướng  
+      <br>🍤 Tôm hấp  
+      <br>🍲 Lẩu  
+      <br>🍺 Bia – Nước ngọt
+    </div>
+    <button class="menu-close" onclick="closeMenu()">⬅ Quay lại</button>
+  </div>
+</div>
 
 <script>
 const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdxbXJFkTb7nuTUuGFKvKubZcHfkCIIT9fhytRbSo-nmudWrg/formResponse";
 const ENTRY_NAME = "entry.1538529867";
 const ENTRY_JOIN = "entry.355441364";
 
-/* ===== OPEN INVITE ===== */
 function openInvite() {
-  document.getElementById("overlay").style.display = "none";
-
-  const splash = document.getElementById("logoSplash");
-  splash.style.display = "flex";
+  overlay.style.display = "none";
+  logoSplash.style.display = "flex";
 
   setTimeout(() => {
-    splash.style.display = "none";
+    logoSplash.style.display = "none";
 
-    const music = document.getElementById("music");
     music.volume = 0;
     music.play();
 
@@ -222,45 +258,41 @@ function openInvite() {
       if (v >= 1) clearInterval(fade);
     }, 200);
 
-    document.getElementById("card").style.display = "block";
-    document.getElementById("musicBtn").style.display = "block";
+    card.style.display = "block";
+    musicBtn.style.display = "block";
     startFoodRain();
   }, 2000);
 }
 
-/* ===== MUSIC ===== */
 function toggleMusic() {
-  const music = document.getElementById("music");
-  const btn = document.getElementById("musicBtn");
-  if (music.paused) {
-    music.play(); btn.textContent = "🔊";
-  } else {
-    music.pause(); btn.textContent = "🔇";
-  }
+  music.paused ? music.play() : music.pause();
 }
 
-/* ===== RESPONSE ===== */
 function respond(ans) {
   let name = "";
 
   if (ans === "Tham gia") {
     name = prompt("Nhập tên của bạn nha 🧧");
     if (!name) return alert("Chưa nhập tên kìa 😤");
-    document.getElementById("result").innerText =
-      "🎊 Đã ghi nhận: " + name + " – " + ans;
+    result.innerText = "🎊 Đã ghi nhận: " + name + " – " + ans;
   } else {
-    document.getElementById("result").innerText =
-      "🥲 Đã ghi nhận: Không tham gia";
+    result.innerText = "🥲 Đã ghi nhận: Không tham gia";
   }
 
   const data = new FormData();
   data.append(ENTRY_NAME, name || "Không tham gia");
   data.append(ENTRY_JOIN, ans);
-
   fetch(FORM_URL, { method: "POST", mode: "no-cors", body: data });
 }
 
-/* ===== FALLING ITEMS ===== */
+/* ===== MENU FUNCTIONS (ADD) ===== */
+function openMenu() {
+  document.getElementById("menuOverlay").style.display = "flex";
+}
+function closeMenu() {
+  document.getElementById("menuOverlay").style.display = "none";
+}
+
 function startFoodRain() {
   const items = ["🍺","🍗","🧧"];
   setInterval(() => {
