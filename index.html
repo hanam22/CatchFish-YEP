@@ -3,149 +3,179 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thiệp Tết 2026</title>
+<title>Thiệp Mời Tất Niên</title>
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Segoe UI", sans-serif;
-    }
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #b30000, #5a0000);
+    color: #fff8dc;
+    overflow-x: hidden;
+}
 
-    body {
-        background: linear-gradient(135deg, #b30000, #ff4d4d);
-        height: 100vh;
-        overflow: hidden;
-    }
+/* Overlay */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, #8b0000, #2b0000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
 
-    /* OVERLAY */
-    #overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.85);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 10;
-    }
+.open-btn {
+    padding: 22px 32px;
+    font-size: 20px;
+    border-radius: 18px;
+    border: none;
+    background: linear-gradient(135deg, #ffd700, #ffb703);
+    font-weight: bold;
+    cursor: pointer;
+}
 
-    #openBtn {
-        background: linear-gradient(45deg, #ffd700, #ff9900);
-        border: none;
-        padding: 18px 32px;
-        font-size: 20px;
-        font-weight: bold;
-        border-radius: 40px;
-        cursor: pointer;
-        box-shadow: 0 0 20px rgba(255,215,0,0.7);
-        transition: transform 0.2s;
-    }
+/* Card */
+.card {
+    max-width: 420px;
+    margin: 40px auto;
+    background: rgba(255,215,0,0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 22px;
+    padding: 28px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    display: none;
+}
 
-    #openBtn:hover {
-        transform: scale(1.05);
-    }
+.logo {
+    width: 90px;
+    margin-bottom: 10px;
+}
 
-    /* CARD */
-    .card {
-        width: 90%;
-        max-width: 420px;
-        margin: auto;
-        margin-top: 80px;
-        background: #fff8e1;
-        border-radius: 24px;
-        padding: 28px;
-        text-align: center;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        display: none;
-        animation: fadeIn 1.2s ease;
-    }
+h1 {
+    color: #ffd700;
+    margin-bottom: 10px;
+}
 
-    h1 {
-        color: #b30000;
-        margin-bottom: 12px;
-    }
+.highlight {
+    color: #ffdf6c;
+    font-weight: bold;
+}
 
-    p {
-        color: #333;
-        line-height: 1.6;
-        margin-top: 10px;
-    }
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
 
-    .footer {
-        margin-top: 20px;
-        font-style: italic;
-        color: #777;
-    }
+button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+.yes { background: #06d6a0; }
+.no  { background: #ef476f; color: white; }
 
-    /* MUSIC BUTTON */
-    #musicBtn {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #ffd700;
-        border: none;
-        border-radius: 50%;
-        width: 56px;
-        height: 56px;
-        font-size: 22px;
-        cursor: pointer;
-        box-shadow: 0 0 15px rgba(0,0,0,0.3);
-        display: none;
+/* Canvas */
+canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+/* Falling items */
+.fall {
+    position: fixed;
+    top: -50px;
+    font-size: 28px;
+    animation: fall linear infinite;
+    z-index: 1;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
     }
+}
+
+/* Music button */
+#musicBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    background: #ffd700;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    display: none;
+}
 </style>
 </head>
 
 <body>
-
-<!-- OVERLAY -->
-<div id="overlay">
-    <button id="openBtn" onclick="openInvite()">🧧 Chạm mở thiệp Tết</button>
-</div>
 
 <!-- AUDIO -->
 <audio id="music" preload="auto" loop>
     <source src="music/tet-dong-day.mp3" type="audio/mpeg">
 </audio>
 
-<!-- CARD -->
-<div class="card" id="card">
-    <h1>🎉 Chúc Mừng Năm Mới 2026 🎉</h1>
-    <p>
-        Năm mới Tết đến xuân về,<br>
-        Chúc bạn sức khỏe tràn trề niềm vui.<br>
-        Công danh thuận lợi hanh thông,<br>
-        Gia đình hạnh phúc, lộc đầy quanh năm.
-    </p>
-    <div class="footer">
-        — Chúc Tết từ Hà Nam —
+<!-- OVERLAY -->
+<div class="overlay" id="overlay">
+    <div style="text-align:center">
+        <p style="font-size:18px; margin-bottom:16px;">
+            🎶 Bật nhạc Tết đón xuân
+        </p>
+        <p style="font-size:14px; opacity:0.85; margin-bottom:20px;">
+            (Bấm để mở thiệp & phát nhạc)
+        </p>
+        <button class="open-btn" onclick="openInvite()">
+            🧧 Chạm mở thiệp Tết
+        </button>
     </div>
 </div>
 
-<!-- MUSIC BUTTON -->
+<!-- FIREWORKS -->
+<canvas id="fireworks"></canvas>
+
+<div class="card" id="card">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" class="logo">
+
+    <h1>🧧 TẤT NIÊN – YEAR END PARTY 🧧</h1>
+    <p>Trân trọng kính mời</p>
+    <p class="highlight">Toàn thể anh/chị/em/chó/mèo Team bắt cá</p>
+
+    <p>🕒 <b>13h – 01/02/2026</b></p>
+    <p>📍 Kingdom101, Quận 10</p>
+    <p>👗 Dresscode: Mặc gì vui là được 😆</p>
+
+    <div class="buttons">
+        <button class="yes" onclick="respond('Tham gia')">🎉 Tham gia</button>
+        <button class="no" onclick="respond('Không tham gia')">🥲 Không tham gia</button>
+    </div>
+
+    <p id="result"></p>
+</div>
+
 <button id="musicBtn" onclick="toggleMusic()">🔊</button>
 
 <script>
-let isPlaying = true;
-
+/* OPEN INVITE + PLAY MUSIC */
 function openInvite() {
     const music = document.getElementById("music");
     const overlay = document.getElementById("overlay");
     const card = document.getElementById("card");
     const musicBtn = document.getElementById("musicBtn");
 
-    // phát nhạc (user interaction)
     music.volume = 0;
     music.play();
 
@@ -162,10 +192,10 @@ function openInvite() {
     musicBtn.style.display = "block";
 }
 
+/* TOGGLE MUSIC */
 function toggleMusic() {
     const music = document.getElementById("music");
     const btn = document.getElementById("musicBtn");
-
     if (music.paused) {
         music.play();
         btn.textContent = "🔊";
@@ -174,6 +204,62 @@ function toggleMusic() {
         btn.textContent = "🔇";
     }
 }
+
+/* RESPONSE */
+function respond(ans) {
+    document.getElementById("result").innerText =
+        "🎊 Đã ghi nhận: " + ans;
+}
+
+/* FIREWORKS */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+let particles = [];
+
+function createFirework() {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height / 2;
+    const colors = ["#ffd700", "#ff6b6b", "#06d6a0"];
+    for (let i = 0; i < 25; i++) {
+        particles.push({
+            x, y,
+            angle: Math.random() * Math.PI * 2,
+            speed: Math.random() * 5 + 1,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            life: 80
+        });
+    }
+}
+
+function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach((p,i)=>{
+        p.x += Math.cos(p.angle)*p.speed;
+        p.y += Math.sin(p.angle)*p.speed;
+        p.life--;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x,p.y,3,3);
+        if(p.life<=0) particles.splice(i,1);
+    });
+    requestAnimationFrame(animate);
+}
+setInterval(createFirework,900);
+animate();
+
+/* FALLING ITEMS */
+const items = ["🌸","🌼","🧧"];
+setInterval(()=>{
+    const el = document.createElement("div");
+    el.className = "fall";
+    el.innerText = items[Math.floor(Math.random()*items.length)];
+    el.style.left = Math.random()*100 + "vw";
+    el.style.animationDuration = (5 + Math.random()*5) + "s";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),10000);
+}, 600);
 </script>
 
 </body>
