@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Year End Party Invitation</title>
+<title>Thiệp Mời Tất Niên</title>
 
 <style>
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: radial-gradient(circle at top, #1a1a2e, #000);
-    color: white;
+    background: radial-gradient(circle at top, #b30000, #5a0000);
+    color: #fff8dc;
     overflow-x: hidden;
 }
 
-/* Overlay mở thiệp */
+/* Overlay */
 .overlay {
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle, #000, #1a1a2e);
+    background: radial-gradient(circle, #8b0000, #2b0000);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,11 +26,11 @@ body {
 }
 
 .open-btn {
-    padding: 20px 30px;
+    padding: 22px 32px;
     font-size: 20px;
-    border-radius: 15px;
+    border-radius: 18px;
     border: none;
-    background: #ffd166;
+    background: linear-gradient(135deg, #ffd700, #ffb703);
     font-weight: bold;
     cursor: pointer;
 }
@@ -39,25 +39,26 @@ body {
 .card {
     max-width: 420px;
     margin: 40px auto;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,215,0,0.15);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 25px;
+    border-radius: 22px;
+    padding: 28px;
     text-align: center;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
 }
 
 .logo {
-    width: 100px;
+    width: 90px;
     margin-bottom: 10px;
 }
 
 h1 {
-    color: #ffd166;
+    color: #ffd700;
+    margin-bottom: 10px;
 }
 
 .highlight {
-    color: #ff6b6b;
+    color: #ffdf6c;
     font-weight: bold;
 }
 
@@ -70,20 +71,36 @@ h1 {
 button {
     flex: 1;
     padding: 12px;
-    border-radius: 10px;
+    border-radius: 12px;
     border: none;
     font-size: 16px;
     cursor: pointer;
 }
 
 .yes { background: #06d6a0; }
-.no { background: #ef476f; color: white; }
+.no  { background: #ef476f; color: white; }
 
+/* Canvas */
 canvas {
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;
     pointer-events: none;
+}
+
+/* Falling items */
+.fall {
+    position: fixed;
+    top: -50px;
+    font-size: 28px;
+    animation: fall linear infinite;
+    z-index: 1;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
 }
 </style>
 </head>
@@ -92,99 +109,106 @@ canvas {
 
 <!-- OVERLAY -->
 <div class="overlay" id="overlay">
-    <button class="open-btn" onclick="openInvite()">
-        🎉 Chạm để mở thiệp 🎶
-    </button>
+    <div style="text-align:center">
+        <p style="font-size:18px; margin-bottom:16px;">
+            🎶 Nhạc sẽ mở trên <b>Zing MP3</b>
+        </p>
+        <p style="font-size:14px; opacity:0.85; margin-bottom:20px;">
+            (Trình duyệt có thể chặn tự phát nhạc)
+        </p>
+        <button class="open-btn" onclick="openInvite()">
+            🧧 Chạm mở thiệp Tết
+        </button>
+    </div>
 </div>
 
 <!-- FIREWORKS -->
 <canvas id="fireworks"></canvas>
 
-<!-- MUSIC XUÂN -->
-<audio id="music" loop>
-    <source src="https://assets.mixkit.co/music/preview/mixkit-chinese-new-year-1174.mp3" type="audio/mpeg">
-</audio>
-
 <div class="card">
     <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" class="logo">
 
-    <h1>🎉 YEAR END PARTY 🎉</h1>
+    <h1>🧧 TẤT NIÊN – YEAR END PARTY 🧧</h1>
     <p>Trân trọng kính mời</p>
     <p class="highlight">Toàn thể anh/chị/em/chó/mèo Team bắt cá</p>
 
-    <p>🕒 <b>13h - 1/2/2026</b></p>
-    <p>📍 Kingdom101, quận 10</p>
-    <p>👗 Dresscode: Mặc qq gì cũng được nhé các tính yêu</p>
+    <p>🕒 <b>13h – 01/02/2026</b></p>
+    <p>📍 Kingdom101, Quận 10</p>
+    <p>👗 Dresscode: Mặc gì vui là được 😆</p>
 
     <div class="buttons">
-        <button class="yes" onclick="respond('YES')">✅ Tham gia</button>
-        <button class="no" onclick="respond('NO')">❌ Không tham gia</button>
+        <button class="yes" onclick="respond('Tham gia')">🎉 Tham gia</button>
+        <button class="no" onclick="respond('Không tham gia')">🥲 Không tham gia</button>
     </div>
 
     <p id="result"></p>
 </div>
 
 <script>
-/* OPEN INVITE + MUSIC */
+/* OPEN INVITE + OPEN ZING MP3 */
 function openInvite() {
-    const music = document.getElementById("music");
-    music.volume = 0;
-    music.play();
-
-    let v = 0;
-    const fade = setInterval(() => {
-        v += 0.05;
-        music.volume = Math.min(v, 1);
-        if (v >= 1) clearInterval(fade);
-    }, 200);
-
+    window.open(
+        "https://zingmp3.vn/album/Sao-Troi-Lam-Gio-Single-Nal-CT/6BC88ZBO.html",
+        "_blank"
+    );
     document.getElementById("overlay").style.display = "none";
 }
 
-/* YES / NO */
-function respond(answer) {
+/* RESPONSE */
+function respond(ans) {
     document.getElementById("result").innerText =
-        "Cảm ơn bạn đã phản hồi: " + answer + " 🎊";
+        "🎊 Đã ghi nhận: " + ans;
 }
 
 /* FIREWORKS */
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = innerWidth;
+canvas.height = innerHeight;
 
 let particles = [];
 
 function createFirework() {
     const x = Math.random() * canvas.width;
     const y = Math.random() * canvas.height / 2;
-    const colors = ["#ffd166", "#ef476f", "#06d6a0", "#118ab2"];
-    for (let i = 0; i < 30; i++) {
+    const colors = ["#ffd700", "#ff6b6b", "#06d6a0"];
+    for (let i = 0; i < 25; i++) {
         particles.push({
             x, y,
             angle: Math.random() * Math.PI * 2,
-            speed: Math.random() * 5 + 2,
+            speed: Math.random() * 5 + 1,
             color: colors[Math.floor(Math.random() * colors.length)],
-            life: 100
+            life: 80
         });
     }
 }
 
 function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach((p, i) => {
-        p.x += Math.cos(p.angle) * p.speed;
-        p.y += Math.sin(p.angle) * p.speed;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach((p,i)=>{
+        p.x += Math.cos(p.angle)*p.speed;
+        p.y += Math.sin(p.angle)*p.speed;
         p.life--;
         ctx.fillStyle = p.color;
-        ctx.fillRect(p.x, p.y, 3, 3);
-        if (p.life <= 0) particles.splice(i, 1);
+        ctx.fillRect(p.x,p.y,3,3);
+        if(p.life<=0) particles.splice(i,1);
     });
     requestAnimationFrame(animate);
 }
-
-setInterval(createFirework, 800);
+setInterval(createFirework,900);
 animate();
+
+/* FALLING TẾT ITEMS */
+const items = ["🌸","🌼","🧧"];
+setInterval(()=>{
+    const el = document.createElement("div");
+    el.className = "fall";
+    el.innerText = items[Math.floor(Math.random()*items.length)];
+    el.style.left = Math.random()*100 + "vw";
+    el.style.animationDuration = (5 + Math.random()*5) + "s";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),10000);
+}, 600);
 </script>
 
 </body>
