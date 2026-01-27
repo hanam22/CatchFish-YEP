@@ -46,6 +46,8 @@ body {
   text-align: center;
   box-shadow: 0 20px 40px rgba(0,0,0,0.6);
   display: none;
+  position: relative;
+  z-index: 10;
 }
 
 .logo {
@@ -87,17 +89,27 @@ canvas {
   pointer-events: none;
 }
 
+/* ===== FALLING EFFECT ===== */
 .fall {
   position: fixed;
-  top: -50px;
-  font-size: 28px;
+  top: -60px;
+  font-size: 30px;
   animation: fall linear infinite;
   z-index: 1;
+  pointer-events: none;
+}
+
+.fall.beer {
+  font-size: 34px;
+}
+
+.fall.chicken {
+  font-size: 36px;
 }
 
 @keyframes fall {
   to {
-    transform: translateY(110vh) rotate(360deg);
+    transform: translateY(120vh) rotate(360deg);
     opacity: 0;
   }
 }
@@ -128,7 +140,7 @@ canvas {
 <div class="overlay" id="overlay">
   <div style="text-align:center">
     <p style="font-size:14px; opacity:0.85; margin-bottom:20px;">
-      (Bấm mở thiệp đi)
+      (Bấm mở thiệp đi2222)
     </p>
     <button class="open-btn" onclick="openInvite()">🧧 Chạm vào đây nèee~~~</button>
   </div>
@@ -174,9 +186,12 @@ function openInvite() {
     music.volume = Math.min(v, 1);
     if (v >= 1) clearInterval(fade);
   }, 200);
+
   document.getElementById("overlay").style.display = "none";
   document.getElementById("card").style.display = "block";
   document.getElementById("musicBtn").style.display = "block";
+
+  startFalling(); // bật bia + gà
 }
 
 function toggleMusic() {
@@ -209,37 +224,26 @@ function respond(ans) {
 
   fetch(FORM_URL, { method: "POST", mode: "no-cors", body: data });
 }
-  .fall.beer {
-  font-size: 30px;
-  animation-duration: 6s;
-}
-
-.fall.chicken {
-  font-size: 32px;
-  animation-duration: 7s;
-}
-const items = [
-  { icon: "🌸", class: "" },
-  { icon: "🌼", class: "" },
-  { icon: "🧧", class: "" },
-  { icon: "🍺", class: "beer" },
-  { icon: "🍗", class: "chicken" }
-];
-
-setInterval(() => {
-  const item = items[Math.floor(Math.random() * items.length)];
-  const el = document.createElement("div");
-  el.className = "fall " + item.class;
-  el.innerText = item.icon;
-  el.style.left = Math.random() * 100 + "vw";
-  el.style.animationDuration = (5 + Math.random() * 5) + "s";
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 10000);
-}, 600);
-
 /* ============================= */
 
-/* fireworks + falling giữ nguyên */
+/* ===== FALLING BEER & CHICKEN ===== */
+function startFalling() {
+  const items = [
+    { icon: "🍺", class: "beer" },
+    { icon: "🍗", class: "chicken" }
+  ];
+
+  setInterval(() => {
+    const item = items[Math.floor(Math.random() * items.length)];
+    const el = document.createElement("div");
+    el.className = "fall " + item.class;
+    el.innerText = item.icon;
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.animationDuration = (5 + Math.random() * 4) + "s";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 10000);
+  }, 700);
+}
 </script>
 
 </body>
