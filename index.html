@@ -126,8 +126,9 @@ function submitForm() {
     const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdxbXJFkTb7nuTUuGFKvKubZcHfkCIIT9fhytRbSo-nmudWrg/formResponse";
 
     const data = new FormData();
-    data.append("entry.111111111", name);      // 🔴 THAY entry HỌ TÊN
-    data.append("entry.222222222", status);    // 🔴 THAY entry THAM GIA
+data.append("entry.1538529867", name);        // Họ và tên
+data.append("entry.987654321", status);      // Tham gia / Không tham gia
+
 
     fetch(formURL, {
         method: "POST",
