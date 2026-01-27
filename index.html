@@ -130,7 +130,7 @@ canvas {
 <div class="overlay" id="overlay">
   <div style="text-align:center">
     <p style="font-size:14px; opacity:0.85; margin-bottom:20px;">
-      (Bấm mở thiệp đi24324324)
+      (Bấm mở thiệp đi)
     </p>
     <button class="open-btn" onclick="openInvite()">
       🧧 Chạm vào đây nèee~~~
@@ -204,15 +204,26 @@ function toggleMusic() {
 }
 
 /* ================= RESPONSE + SUBMIT ================= */
+<script>
 function respond(ans) {
-  const name = prompt("Nhập tên của bạn nha 🧧");
-  if (!name) return alert("Chưa nhập tên kìa 😤");
+
+  let name = "";
+
+  // CHỈ hỏi tên khi THAM GIA
+  if (ans === "Tham gia") {
+    name = prompt("Nhập tên của bạn nha 🧧");
+    if (!name) return alert("Chưa nhập tên kìa 😤");
+  }
 
   document.getElementById("result").innerText =
-    "🎊 Đã ghi nhận: " + name + " – " + ans;
+    ans === "Tham gia"
+      ? "🎊 Đã ghi nhận: " + name + " – " + ans
+      : "🥲 Đã ghi nhận: Không tham gia";
 
   const data = new FormData();
-  data.append(ENTRY_NAME, name);
+
+  // Nếu không tham gia thì vẫn gửi nhưng tên để trống hoặc ghi chú
+  data.append(ENTRY_NAME, name || "Không tham gia");
   data.append(ENTRY_JOIN, ans);
 
   fetch(FORM_URL, {
